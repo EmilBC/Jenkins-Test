@@ -6,7 +6,14 @@ node {
     stage('Clone Repo') {
       git 'https://github.com/EmilBC/Jenkins-Test.git'
     }
-
+post{
+        always{
+            mail to: "emil.bou-chebel@docaposte.fr",
+            subject: "Test Email",
+            body: "Test"
+        }
+    }
+}
 
   
     stage('Build Project') {
