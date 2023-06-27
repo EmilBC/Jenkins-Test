@@ -9,7 +9,7 @@ pipeline {
         }
     post{
         always{
-            mail to: "naivetechblog@gmail.com",
+            mail to: "emil.bou-chebel@docaposte.fr",
             subject: "Test Email",
             body: "Test"
         }
