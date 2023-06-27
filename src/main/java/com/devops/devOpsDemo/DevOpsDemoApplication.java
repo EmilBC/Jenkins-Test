@@ -13,6 +13,7 @@ public class DevOpsDemoApplication {
 		//comment if ok or not for push
 		//One More Modif
 		//rgte
+		//change the url
 		SpringApplication.run(DevOpsDemoApplication.class, args);
 	}
 
