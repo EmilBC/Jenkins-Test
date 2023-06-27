@@ -12,6 +12,7 @@ public class DevOpsDemoApplication {
 		//-----all events
 		//comment if ok or not for push
 		//One More Modif
+		//rgte
 		SpringApplication.run(DevOpsDemoApplication.class, args);
 	}
 
