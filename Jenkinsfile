@@ -7,7 +7,11 @@ node {
       git 'https://github.com/EmilBC/Jenkins-Test.git'
     }
 
-  
+  post {
+        always {
+            emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+        }
+    }
   
     stage('Build Project') {
       sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
