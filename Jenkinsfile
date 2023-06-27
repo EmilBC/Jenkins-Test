@@ -13,7 +13,7 @@ post{
             body: "Test"
         }
     }
-}
+
 
   
     stage('Build Project') {
