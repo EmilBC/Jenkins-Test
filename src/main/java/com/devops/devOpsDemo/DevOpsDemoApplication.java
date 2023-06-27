@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DevOpsDemoApplication {
 
 	public static void main(String[] args) {
+		//-----all events
 		//comment if ok or not for push
 		//One More Modif
 		SpringApplication.run(DevOpsDemoApplication.class, args);
