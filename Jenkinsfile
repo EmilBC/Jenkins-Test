@@ -6,13 +6,14 @@ pipeline {
         text(name: "TEST_TEXT", defaultValue: "Jenkins Pipeline Tutorial", description: "Sample multi-line text parameter")
         password(name: "TEST_PASSWORD", defaultValue: "root", description: "Sample password parameter")
         choice(name: "TEST_CHOICE", choices: ["production", "staging", "development"], description: "Sample multi-choice parameter")
+ 	file(description: 'sqlfile', name: sqlfile)
     }
     stages {
         stage("Build") {
             steps {
                 echo "Build stage."
                 echo "Hello $params.TEST_STRING"
-		sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < https://github.com/EmilBC/Jenkins-Test/blob/master/migration/integ.sql'
+		sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < getContext(hudson.FilePath).child(uploadedFile)'
 		echo "DB Init"
             }
         }
