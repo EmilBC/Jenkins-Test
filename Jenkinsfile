@@ -1,4 +1,5 @@
 pipeline {
+	def mvnHome = tool 'maven-3.9.2'
     agent any
     parameters {
         booleanParam(name: "TEST_BOOLEAN", defaultValue: true, description: "Sample boolean parameter")
