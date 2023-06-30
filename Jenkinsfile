@@ -12,10 +12,10 @@ pipeline {
         stage("Build") {
 	
             steps {
-		    git 'https://github.com/EmilBC/Jenkins-Test.git'
+		git 'https://github.com/EmilBC/Jenkins-Test.git'
                 echo "Build stage."
                 echo "Hello $params.TEST_STRING"
-		sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < integ.sql'
+		//sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < integ.sql'
 		echo "DB Init"
             }
         }
