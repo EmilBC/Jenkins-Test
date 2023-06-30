@@ -27,11 +27,11 @@ node {
     }
     
     stage('Build Docker Image') {
-      sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 build -t devopsexample:${env.BUILD_NUMBER} ."
+      sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 build -t devopsexamplenew:${env.BUILD_NUMBER} ."
     }
     
     stage('Deploy Docker Image'){
       	echo "Docker Image Tag Name: ${dockerImageTag}"
-	sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexample -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
+	sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexamplenew -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
     }
 }
