@@ -1,7 +1,16 @@
 node {
+ agent any
     def mvnHome = tool 'maven-3.9.2'
     def dockerImage
     def dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
+
+	
+    parameters {
+        choice(
+            choices: ['greeting' , 'silence'],
+            description: '',
+            name: 'REQUESTED_ACTION')
+    }
     
     stage('Clone Repo') {
       git 'https://github.com/EmilBC/Jenkins-Test.git'
