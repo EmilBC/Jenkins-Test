@@ -20,6 +20,11 @@ pipeline {
             }
         }
         stage("Release") {
+		when {
+                expression { 
+                   return params.TEST_TEXT == 'PROD'
+                }
+            }
             steps {
                 echo "Release stage."
             }
