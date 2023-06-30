@@ -7,15 +7,15 @@ node {
       git 'https://github.com/EmilBC/Jenkins-Test.git'
     }
 
-    stage('SCM') {
-	  checkout scm
-    }
-    stage('SonarQube Analysis') {
-      def mvn = tool 'maven-3.9.2';
-      withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
-      }
-    }	
+    //stage('SCM') {
+	  //checkout scm
+    //}
+   // stage('SonarQube Analysis') {
+     // def mvn = tool 'maven-3.9.2';
+     // withSonarQubeEnv() {
+     // sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
+     // }
+  //  }	
   
     stage('Build Project') {
       sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
