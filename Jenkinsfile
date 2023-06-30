@@ -1,4 +1,9 @@
-
+import groovy.sql.Sql
+node { 
+    Class.forName("com.mysql.jdbc.Driver")
+    def sql = Sql.newInstance("jdbc:mysql://<mysql_db_host>:3306/<db_name>", "myuser","mypass", "com.mysql.jdbc.Driver")
+    sql.execute "SELECT * FROM table"   
+}
 pipeline {
 	
     agent any
