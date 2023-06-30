@@ -12,6 +12,8 @@ pipeline {
             steps {
                 echo "Build stage."
                 echo "Hello $params.TEST_STRING"
+		sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < path/to/your/file.sql'
+		echo "DB Init"
             }
         }
         stage("Test") {
