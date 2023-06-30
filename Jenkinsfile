@@ -1,7 +1,7 @@
 node {
     def mvnHome = tool 'maven-3.9.2'
     def dockerImage
-    def dockerImageTag = "devopsexample${env.BUILD_NUMBER}"
+    def dockerImageTag = "devopsexampleNew${env.BUILD_NUMBER}"
     
     stage('Clone Repo') {
       git 'https://github.com/EmilBC/Jenkins-Test.git'
@@ -27,11 +27,11 @@ node {
     }
     
     stage('Build Docker Image') {
-      sh "docker -H tcp://192.168.8.100:2375 build -t devopsexample:${env.BUILD_NUMBER} ."
+      sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 build -t devopsexample:${env.BUILD_NUMBER} ."
     }
     
     stage('Deploy Docker Image'){
       	echo "Docker Image Tag Name: ${dockerImageTag}"
-	sh "docker -H tcp://192.168.8.100:2375 run --name devopsexample -d -p 2222:2222 devopsexample:${env.BUILD_NUMBER}"
+	sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexample -d -p 2222:2222 devopsexample:${env.BUILD_NUMBER}"
     }
 }
