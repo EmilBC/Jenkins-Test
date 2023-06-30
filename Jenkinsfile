@@ -1,9 +1,4 @@
-import groovy.sql.Sql
-node { 
-    Class.forName("com.mysql.jdbc.Driver")
-    def sql = Sql.newInstance("jdbc:mysql://<mysql_db_host>:3306/<db_name>", "myuser","mypass", "com.mysql.jdbc.Driver")
-    sql.execute "SELECT * FROM table"   
-}
+
 pipeline {
 	
     agent any
@@ -26,10 +21,17 @@ pipeline {
                 echo "Build stage."
                 echo "Hello $params.TEST_STRING"
 		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
-		sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < integ.sql'
+		//sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < integ.sql'
 		echo "DB Init"
             }
         }
+	    stage('Deploying React.js container to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+        }
+      }
+    }
         stage("Test") {
             steps {
                 echo "Test stage."
