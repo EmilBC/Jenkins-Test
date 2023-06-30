@@ -22,7 +22,7 @@ pipeline {
         stage("Release") {
 		when {
                 expression { 
-                   return params.TEST_TEXT == 'PROD'
+                   return params.TEST_TEXT == 'Jenkins Pipeline Tutorial'
                 }
             }
             steps {
