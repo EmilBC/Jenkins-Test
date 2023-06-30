@@ -1,9 +1,10 @@
-node {
-def mvnHome = tool 'maven-3.9.2'
-}
+
 pipeline {
 	
     agent any
+	environment {
+   mvnHome = tool 'maven-3.9.2'
+}
     parameters {
         booleanParam(name: "TEST_BOOLEAN", defaultValue: true, description: "Sample boolean parameter")
         string(name: "TEST_STRING", defaultValue: "ssbostan", trim: true, description: "Sample string parameter")
