@@ -4,7 +4,7 @@ pipeline {
     agent any
 	environment {
    mvnHome = tool 'maven-3.9.2'
-   
+   dockerImage=""
 dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 }
     parameters {
@@ -54,29 +54,46 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 		
             }
         }
+
+
+
+
+	    
     
-	    stage('Deploying React.js container to Kubernetes') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
-        }
-      }
+	   // stage('Deploying React.js container to Kubernetes') {
+      //steps {
+        //script {
+          //kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+        //}
+      //}
+    //}
+      stage('SCM') {
+	  checkout scm
     }
-        stage("Test") {
-            steps {
-                echo "Test stage."
-            }
-        }
-        stage("Release") {
-		when {
-                expression { 
-                   return params.TEST_TEXT == 'Jenkins Pipeline Tutorial'
-                }
-            }
-            steps {
-                echo "Release stage."
-            }
-        }
+    stage('SonarQube Analysis') {
+      def mvn = tool 'maven-3.9.2';
+      withSonarQubeEnv() {
+      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
+      }
+    }	
+  
+    stage('Build Project') {
+      sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
+    }
+    
+   stage('Initialize Docker'){         
+	  def dockerHome = tool 'MyDocker'         
+	  env.PATH = "${dockerHome}/bin:${env.PATH}"     
+    }
+    
+    stage('Build Docker Image') {
+      sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 build -t devopsexamplenew:${env.BUILD_NUMBER} ."
+    }
+    
+    stage('Deploy Docker Image'){
+      	echo "Docker Image Tag Name: ${dockerImageTag}"
+	sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexamplenew -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
+    }
     }
 }
 
