@@ -71,13 +71,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 
 	    
     
-	   // stage('Deploying React.js container to Kubernetes') {
-      //steps {
-        //script {
-          //kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
-        //}
-      //}
-    //}
+
 	    
       stage('SCM') {
 	      steps{
@@ -108,16 +102,28 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
     
     stage('Build Docker Image') {
 	    steps{
-      sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 build -t devopsexamplenew12345:${env.BUILD_NUMBER} ."
+      sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 build -t devopsexamplenew123456:${env.BUILD_NUMBER} ."
 	    }
     }
     
     stage('Deploy Docker Image'){
 	    steps{
       	echo "Docker Image Tag Name: ${dockerImageTag}"
-	sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 run --name devopsexamplenew12345 -d -p 2222:2222 devopsexamplenew12345:${env.BUILD_NUMBER}"
+	sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 run --name devopsexamplenew123456 -d -p 2222:2222 devopsexamplenew123456:${env.BUILD_NUMBER}"
 	    }
     }
+	    stage('Deploying to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+        }
+      
+      }
+    }
+
+
+
+	    
     }
     
 }
