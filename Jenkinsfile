@@ -10,11 +10,10 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 }
     parameters {
         booleanParam(name: "BUILD_FOR_PRODUCTION", defaultValue: false, description: "Check if it's for prod")
-	     choice(name: "BUILD_LANGUAGE", choices: ["JAVA", "NET", "PHP"] ,description: "Choose your techno, for dev please set default value in your commited file")
-        string(name: "TEST_STRING", defaultValue: "ssbostan", trim: true, description: "Sample string parameter")
-        text(name: "TEST_TEXT", defaultValue: "Jenkins Pipeline Tutorial", description: "Sample multi-line text parameter")
-        password(name: "TEST_PASSWORD", defaultValue: "root", description: "Sample password parameter")
-        choice(name: "TEST_CHOICE", choices: ["production", "staging", "development"], description: "Sample multi-choice parameter")
+        choice(name: "BUILD_LANGUAGE", choices: ["JAVA", "NET", "PHP"] ,description: "Choose your techno, for dev please set default value in your commited file")
+        string(name: "USERNAME", defaultValue: "ebouchebel", trim: true, description: "db")
+      	password(name: "PASSWORD", defaultValue: "root", description: "db")
+         booleanParam(name: "RUN_SONNAR", defaultValue: false, description: "run sonar or not")
  	
     }
     stages {
@@ -76,6 +75,11 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
     stage('SonarQube Analysis') {
 	    steps{
       script{
+	      when {
+                expression { 
+                   return params.RUN_SONNAR == true
+                }
+            }
       withSonarQubeEnv() {
       sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
       }
