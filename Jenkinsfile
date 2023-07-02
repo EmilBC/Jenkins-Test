@@ -7,7 +7,7 @@ pipeline {
 }
     parameters {
         booleanParam(name: "BUILD_FOR_PRODUCTION", defaultValue: false, description: "Check if it's for prod")
-	     choice(name: "BUILD_LANGUAGE", choices: ["JAVA", "NET", "PHP"], defaultValue:"JAVA" ,description: "Choose your techno, for dev please set default value in your commited file")
+	     choice(name: "BUILD_LANGUAGE", choices: ["JAVA", "NET", "PHP"] ,description: "Choose your techno, for dev please set default value in your commited file")
         string(name: "TEST_STRING", defaultValue: "ssbostan", trim: true, description: "Sample string parameter")
         text(name: "TEST_TEXT", defaultValue: "Jenkins Pipeline Tutorial", description: "Sample multi-line text parameter")
         password(name: "TEST_PASSWORD", defaultValue: "root", description: "Sample password parameter")
