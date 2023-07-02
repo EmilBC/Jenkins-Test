@@ -33,7 +33,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
                 echo "Build stage Prod."
 		    script {
                if (params.BUILD_LANGUAGE==""){
-		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
+		sh "'${mvnHome}/bin/mvn' -B  clean package"
 		       echo "Build stage Prod. java" 
 		} else {
 		    echo "Build stage Prod. " 
@@ -52,7 +52,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 		git 'https://github.com/EmilBC/Jenkins-Test.git'
                 echo "Build stage Dev"
                
-		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
+		sh "'${mvnHome}/bin/mvn' -B  clean package"
 		
             }
         }
