@@ -4,6 +4,8 @@ pipeline {
     agent any
 	environment {
    mvnHome = tool 'maven-3.9.2'
+   dockerImage
+dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 }
     parameters {
         booleanParam(name: "BUILD_FOR_PRODUCTION", defaultValue: false, description: "Check if it's for prod")
