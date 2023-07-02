@@ -56,13 +56,13 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 		
 		git 'https://github.com/EmilBC/Jenkins-Test.git'
                 echo "Build stage Dev"
-               
+         script{      
  if(params.CHECK_TEST==false){
 		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
 		       }else{
 			    sh "'${mvnHome}/bin/mvn' -B  clean package"   
 		       }
-		
+	 }
             }
         }
 
