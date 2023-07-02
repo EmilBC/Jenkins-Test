@@ -69,11 +69,11 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
     //}
 	    
       stage('SCM') {
-	      step{
+	      steps{
 	  checkout scm
 	      }    }
     stage('SonarQube Analysis') {
-	    step{
+	    steps{
       def mvn = tool 'maven-3.9.2';
       withSonarQubeEnv() {
       sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
@@ -81,25 +81,23 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 	    }
     }	
   
-    stage('Build Project') {
-      sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
-    }
+  
     
    stage('Initialize Docker'){    
-	   step{
+	   steps{
 	  def dockerHome = tool 'MyDocker'         
 	  env.PATH = "${dockerHome}/bin:${env.PATH}"     
 	   }
     }
     
     stage('Build Docker Image') {
-	    step{
+	    steps{
       sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 build -t devopsexamplenew:${env.BUILD_NUMBER} ."
 	    }
     }
     
     stage('Deploy Docker Image'){
-	    step{
+	    steps{
       	echo "Docker Image Tag Name: ${dockerImageTag}"
 	sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexamplenew -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
 	    }
