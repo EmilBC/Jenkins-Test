@@ -67,6 +67,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
         //}
       //}
     //}
+	    steps{
       stage('SCM') {
 	  checkout scm
     }
@@ -93,6 +94,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
     stage('Deploy Docker Image'){
       	echo "Docker Image Tag Name: ${dockerImageTag}"
 	sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexamplenew -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
+    }
     }
     }
 }
