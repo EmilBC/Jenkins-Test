@@ -75,9 +75,10 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 	      }    }
     stage('SonarQube Analysis') {
 	    steps{
-      
+      script{
       withSonarQubeEnv() {
       sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
+      }
       }
 	    }
     }	
