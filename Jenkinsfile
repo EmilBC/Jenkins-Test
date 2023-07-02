@@ -30,8 +30,9 @@ pipeline {
 		    script {
                if (params.BUILD_LANGUAGE==""){
 		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
+		       echo "Build stage Prod. java" 
 		} else {
-		    echo "Build stage Prod. " params.BUILD_LANGUAGE  
+		    echo "Build stage Prod. " 
 		}
 		    }
             }
