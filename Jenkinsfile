@@ -6,7 +6,7 @@ pipeline {
    mvnHome = tool 'maven-3.9.2'
 }
     parameters {
-        booleanParam(name: "TEST_BOOLEAN", defaultValue: true, description: "Sample boolean parameter")
+        booleanParam(name: "BUILD_FOR_PRODUCTION", defaultValue: false, description: "Check if it's for prod")
         string(name: "TEST_STRING", defaultValue: "ssbostan", trim: true, description: "Sample string parameter")
         text(name: "TEST_TEXT", defaultValue: "Jenkins Pipeline Tutorial", description: "Sample multi-line text parameter")
         password(name: "TEST_PASSWORD", defaultValue: "root", description: "Sample password parameter")
@@ -15,14 +15,33 @@ pipeline {
     }
     stages {
         stage("Build") {
-	
+		when {
+                expression { 
+                   return params.BUILD_FOR_PRODUCTION == 'true'
+                }
+            }
             steps {
+		
 		git 'https://github.com/EmilBC/Jenkins-Test.git'
-                echo "Build stage."
-                echo "Hello $params.TEST_STRING"
+                echo "Build stage Prod."
+               
 		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
-		//sh 'mysql -h localhost:3306 -u root -p $params.TEST_PASSWORD cicd < integ.sql'
+		
 		echo "DB Init"
+            }
+
+	when {
+                expression { 
+                  return params.BUILD_FOR_PRODUCTION == 'false'
+                }
+            }
+		 steps {
+		
+		git 'https://github.com/EmilBC/Jenkins-Test.git'
+                echo "Build stage Dev"
+               
+		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
+		
             }
         }
 	    stage('Deploying React.js container to Kubernetes') {
