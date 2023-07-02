@@ -14,7 +14,7 @@ pipeline {
  	
     }
     stages {
-        stage("Build") {
+        stage("Build Prod") {
 		when {
                 expression { 
                    return params.BUILD_FOR_PRODUCTION == 'true'
@@ -27,9 +27,10 @@ pipeline {
                
 		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
 		
-		echo "DB Init"
+		
             }
-
+	}
+	      stage("Build Prod Dev") {
 	when {
                 expression { 
                   return params.BUILD_FOR_PRODUCTION == 'false'
@@ -44,6 +45,7 @@ pipeline {
 		
             }
         }
+    
 	    stage('Deploying React.js container to Kubernetes') {
       steps {
         script {
