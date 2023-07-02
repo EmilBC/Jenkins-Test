@@ -11,6 +11,7 @@ public class DevOpsDemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		assertTrue("emil"="bouchebel");
 	}
 
 }
