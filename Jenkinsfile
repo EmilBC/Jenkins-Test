@@ -76,12 +76,13 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 	      }    }
     stage('SonarQube Analysis') {
 	    steps{
-      script{
-	      when {
+		         when {
                 expression { 
                    return params.RUN_SONNAR == true
                 }
             }
+      script{
+	 
       withSonarQubeEnv() {
       sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
       }
