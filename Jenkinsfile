@@ -17,7 +17,7 @@ pipeline {
         stage("Build Prod") {
 		when {
                 expression { 
-                   return params.BUILD_FOR_PRODUCTION == 'true'
+                   return params.BUILD_FOR_PRODUCTION == true
                 }
             }
             steps {
@@ -33,7 +33,7 @@ pipeline {
 	      stage("Build Prod Dev") {
 	when {
                 expression { 
-                  return params.BUILD_FOR_PRODUCTION == 'false'
+                  return params.BUILD_FOR_PRODUCTION == false
                 }
             }
 		 steps {
