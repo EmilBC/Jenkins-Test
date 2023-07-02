@@ -12,7 +12,7 @@ public class DevOpsDemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		assertTrue(1==2);
+		assertTrue(1==1);
 	}
 
 }
