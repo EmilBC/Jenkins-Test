@@ -106,7 +106,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
     stage('Deploy Docker Image'){
 	    steps{
       	echo "Docker Image Tag Name: ${dockerImageTag}"
-	sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 run --name devopsexamplenew1234 -d -p 5556:5556 devopsexamplenew1234:${env.BUILD_NUMBER}"
+	sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 run --name devopsexamplenew1234 -d -p 2222:2222 devopsexamplenew1234:${env.BUILD_NUMBER}"
 	    }
     }
     }
