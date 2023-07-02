@@ -6,6 +6,7 @@ pipeline {
    mvnHome = tool 'maven-3.9.2'
    dockerImage=""
 dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
+		 dockerHome = tool 'MyDocker' 
 }
     parameters {
         booleanParam(name: "BUILD_FOR_PRODUCTION", defaultValue: false, description: "Check if it's for prod")
@@ -85,7 +86,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
     
    stage('Initialize Docker'){    
 	   steps{
-	  def dockerHome = tool 'MyDocker'         
+	          
 	  env.PATH = "${dockerHome}/bin:${env.PATH}"     
 	   }
     }
