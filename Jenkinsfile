@@ -15,6 +15,7 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
       	password(name: "PASSWORD", defaultValue: "root", description: "db")
          booleanParam(name: "RUN_SONNAR", defaultValue: false, description: "run sonar or not")
 	     string(name: "DOCKER_IMAGE_NAME", defaultValue: "imagetest", trim: true, description: "selectdockerimage")
+	     booleanParam(name: "CHECK_TEST", defaultValue: false, description: "Check if test is ok or not")
 	    
  	
     }
@@ -33,7 +34,11 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
                 echo "Build stage Prod."
 		    script {
                if (params.BUILD_LANGUAGE==""){
-		sh "'${mvnHome}/bin/mvn' -B  clean package"
+		       if(params.CHECK_TEST==false){
+		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
+		       }else{
+			    sh "'${mvnHome}/bin/mvn' -B  clean package"   
+		       }
 		       echo "Build stage Prod. java" 
 		} else {
 		    echo "Build stage Prod. " 
@@ -52,7 +57,11 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 		git 'https://github.com/EmilBC/Jenkins-Test.git'
                 echo "Build stage Dev"
                
-		sh "'${mvnHome}/bin/mvn' -B  clean package"
+ if(params.CHECK_TEST==false){
+		sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
+		       }else{
+			    sh "'${mvnHome}/bin/mvn' -B  clean package"   
+		       }
 		
             }
         }
