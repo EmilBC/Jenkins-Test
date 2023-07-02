@@ -14,6 +14,8 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
         string(name: "USERNAME", defaultValue: "ebouchebel", trim: true, description: "db")
       	password(name: "PASSWORD", defaultValue: "root", description: "db")
          booleanParam(name: "RUN_SONNAR", defaultValue: false, description: "run sonar or not")
+	     string(name: "DOCKER_IMAGE_NAME", defaultValue: "imagetest", trim: true, description: "selectdockerimage")
+	    
  	
     }
     stages {
@@ -99,14 +101,14 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
     
     stage('Build Docker Image') {
 	    steps{
-      sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 build -t devopsexamplenew:${env.BUILD_NUMBER} ."
+      sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 build -t devopsexamplenew:${env.BUILD_NUMBER} ."
 	    }
     }
     
     stage('Deploy Docker Image'){
 	    steps{
       	echo "Docker Image Tag Name: ${dockerImageTag}"
-	sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexamplenew -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
+	sh "docker -H  tcp://2.tcp.eu.ngrok.io:16232 run --name devopsexamplenew -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
 	    }
     }
     }
@@ -115,44 +117,3 @@ dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
 
 
 
-//pipeline {
- 
-    //def mvnHome = tool 'maven-3.9.2'
-    //def dockerImage
-    //def dockerImageTag = "devopsexamplenew${env.BUILD_NUMBER}"
-
-	
-   
-    
-    //stage('Clone Repo') {
-      //git 'https://github.com/EmilBC/Jenkins-Test.git'
-    //}
-
-    //stage('SCM') {
-	//  checkout scm
-    //}
-    //stage('SonarQube Analysis') {
-     // def mvn = tool 'maven-3.9.2';
-      //withSonarQubeEnv() {
-      //sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=testoutsidegit -Dsonar.projectName='testoutsidegit'"
-      //}
-    //}	
-  
-    //stage('Build Project') {
-     // sh "'${mvnHome}/bin/mvn' -B -DskipTests clean package"
-    //}
-    
-   // stage('Initialize Docker'){         
-	//  def dockerHome = tool 'MyDocker'         
-	  //env.PATH = "${dockerHome}/bin:${env.PATH}"     
-    //}
-    
-   // stage('Build Docker Image') {
-     // sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 build -t devopsexamplenew:${env.BUILD_NUMBER} ."
-    //}
-    
-    //stage('Deploy Docker Image'){
-      //	echo "Docker Image Tag Name: ${dockerImageTag}"
-	//sh "docker -H tcp://6.tcp.eu.ngrok.io:17444 run --name devopsexamplenew -d -p 2222:2222 devopsexamplenew:${env.BUILD_NUMBER}"
-    //}
-//}
